@@ -40,7 +40,9 @@ function onDataReceived(text) {
   else if(text === 'exit\n'){
     exitApp();
   }
-  
+  else if(text === 'help\n'){
+    help();
+  }
   
   else if(text === 'hello\n'){
     hello();
@@ -60,6 +62,7 @@ function onDataReceived(text) {
  */
 function unknownCommand(c){
   console.log('unknown command: "'+c.trim()+'"')
+  console.log('type *help* to see the list of commands!')
 }
 
 
@@ -70,6 +73,18 @@ function unknownCommand(c){
  */
 function hello(){
   console.log('hello!')
+}
+
+
+/** 
+ * shows the list of commands in the app in case 
+ * the user writes something unknown 
+ */
+function help(){
+  console.log('commands list :');
+  console.log('*hello*');
+  console.log('*quit*');
+  console.log('*exit*');
 }
 
 
