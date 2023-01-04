@@ -87,10 +87,12 @@ function hello(){
 /** 
  * shows the list of commands in the app in case 
  * the user writes something unknown 
+ * 
  */
 function help(){
   console.log('commands list :');
   console.log("--------------------")
+  console.log("*hello with a name will respond the name back !")
   console.log('*hello*');
   console.log('*quit*');
   console.log('*exit*');
