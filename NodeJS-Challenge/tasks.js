@@ -15,11 +15,12 @@ function startApp(name) {
   console.log(`Welcome to ${name}'s application!`);
   console.log("----------------------------------------");
 }
-let listedTasks= [" ",
+let listedTasks = [
+  " ",
   "go to the gym !",
   "take a shower ",
-  "practice javascript"
-]
+  "practice javascript",
+];
 /**
  * Decides what to do depending on the data that was received
  * This function receives the input sent by the user.
@@ -42,7 +43,10 @@ function onDataReceived(text) {
     quit();
   } else if (text === "exit\n") {
     exitApp();
-  } else if (text === "help\n") {
+  }else if (text.includes("add")){
+    addTask(text);
+  }
+   else if (text === "help\n") {
     help();
   } else if (text === "hello\n") {
     hello();
@@ -69,7 +73,7 @@ function unknownCommand(c) {
 
 /**
  * Says hello
- *
+ *@param  {string} c
  * @returns {void}
  */
 function hello() {
@@ -92,16 +96,26 @@ function help() {
 
 /**
  * lists the tasks saved inside the array
- *
- *
- *
  */
 function list() {
-for (let i=1;i<listedTasks.length;i++){
-  console.log(i+"-"+listedTasks[i])
+  for (let i = 1; i < listedTasks.length; i++) {
+    console.log(i + "-" + listedTasks[i]);
+  }
+}
+/**
+ * adds new tasks to the list 
+ * @param x is used to take the input and filter out the task, and save it inside the array
+ */
+function addTask(x){
+let removeCommon=x.replace("add ","")
+let removeSpace=removeCommon.trim();
+if(x.includes("add ")){
+  listedTasks.push(removeSpace)
+  console.log(list())
+}else if(x === "add\n"){console.log("error, cant add a task without description!!!");
+}
 }
 
-}
 
 /**
  * Exits the application
