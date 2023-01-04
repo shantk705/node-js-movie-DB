@@ -33,7 +33,9 @@ function startApp(name){
  * @param  {string} text data typed by the user
  * @returns {void}
  */
+
 function onDataReceived(text) {
+  let response = text.replace("\n","!")
   if (text === 'quit\n') {
     quit();
   }
@@ -43,9 +45,12 @@ function onDataReceived(text) {
   else if(text === 'help\n'){
     help();
   }
-  
   else if(text === 'hello\n'){
     hello();
+  }
+  
+  else if(text.includes("hello ")){
+    console.log(response)
   }
   else{
     unknownCommand(text);
@@ -72,7 +77,10 @@ function unknownCommand(c){
  * @returns {void}
  */
 function hello(){
-  console.log('hello!')
+  console.log('hello!');
+ 
+  
+  
 }
 
 
@@ -82,6 +90,7 @@ function hello(){
  */
 function help(){
   console.log('commands list :');
+  console.log("--------------------")
   console.log('*hello*');
   console.log('*quit*');
   console.log('*exit*');
