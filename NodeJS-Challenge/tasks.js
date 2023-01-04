@@ -43,10 +43,11 @@ function onDataReceived(text) {
     quit();
   } else if (text === "exit\n") {
     exitApp();
-  }else if (text.includes("add")){
+  } else if (text.includes("add")) {
     addTask(text);
-  }
-   else if (text === "help\n") {
+  } else if (text.includes("remove")) {
+    removeTask(text);
+  } else if (text === "help\n") {
     help();
   } else if (text === "hello\n") {
     hello();
@@ -86,12 +87,15 @@ function hello() {
  *
  */
 function help() {
-  console.log("commands list :");
-  console.log("--------------------");
-  console.log("*hello with a name will respond the name back !");
-  console.log("*hello*");
-  console.log("*quit*");
-  console.log("*exit*");
+  console.log("Commands list :");
+  console.log("----------------------------------------------------------------------------------------------------");
+  console.log("*extended hello*  --add your name after  the command *hello*");
+  console.log("*hello*  -- a simple command to greet the user ");
+  console.log("*list*    -- lists all of the available tasks");
+  console.log("*add*  -- adds a new task to the list of tasks,name the task after the command to add it on the list");
+  console.log("*remove*   -- adds a new task to the list of tasks,use the number of the task to remove it");
+  console.log("*quit*/*exit*   -- quits the application ");
+ 
 }
 
 /**
@@ -103,19 +107,38 @@ function list() {
   }
 }
 /**
- * adds new tasks to the list 
+ * adds new tasks to the list
  * @param x is used to take the input and filter out the task, and save it inside the array
  */
-function addTask(x){
-let removeCommon=x.replace("add ","")
-let removeSpace=removeCommon.trim();
-if(x.includes("add ")){
-  listedTasks.push(removeSpace)
-  console.log(list())
-}else if(x === "add\n"){console.log("error, cant add a task without description!!!");
-}
+function addTask(x) {
+  let removeCommon = x.replace("add ", "");
+  let removeSpace = removeCommon.trim();
+  if (x.includes("add ")) {
+    listedTasks.push(removeSpace);
+    console.log(list());
+  } else if (x === "add\n") {
+    console.log("error, cant add a task without description!!!");
+  }
 }
 
+/**
+ * Removes tasks from the list
+ * @param x is used to take the input and filter out the index of the array the user wants to remove 
+ */
+ function removeTask(x) {
+  let filterNumber = x.substr(7,1);
+  let i=+filterNumber;
+  if (x.includes("remove ")){
+    listedTasks.splice(i,1)
+    console.log(`removed task number ${i}!!!`)
+    console.log(list());
+  }else if (x === "remove\n"){
+    listedTasks.pop();
+    console.log("automatically removed latest task!!!");
+    console.log(list());
+  }
+  
+}
 
 /**
  * Exits the application
