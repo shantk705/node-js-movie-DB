@@ -16,11 +16,16 @@ function startApp(name) {
   console.log("----------------------------------------");
 }
 let listedTasks = [
-  " ",
+ "",
   "go to the gym !",
   "take a shower ",
   "practice javascript",
 ];
+let emptyBox="[ ]";
+let checkBox="[✓]";
+
+
+
 /**
  * Decides what to do depending on the data that was received
  * This function receives the input sent by the user.
@@ -41,17 +46,22 @@ function onDataReceived(text) {
   let response = text.replace("\n", "!");
   if (text === "quit\n") {
     quit();
-  } else if (text === "exit\n") {
+  } else if (text==="clear\n"){
+    console.clear();
+  }
+  else if (text === "exit\n") {
     exitApp();
-  } else if (text.includes("add")) {
+  } else if (text.startsWith("add")) {
     addTask(text);
-  } else if (text.includes("remove")) {
+  } else if (text.startsWith("remove")) {
     removeTask(text);
   } else if (text === "help\n") {
     help();
+  } else if (text.startsWith("edit")) {
+    editTask(text);
   } else if (text === "hello\n") {
     hello();
-  } else if (text.includes("hello ")) {
+  } else if (text.startsWith("hello ")) {
     console.log(response);
   } else if (text === "list\n") {
     list();
@@ -88,14 +98,17 @@ function hello() {
  */
 function help() {
   console.log("Commands list :");
-  console.log("----------------------------------------------------------------------------------------------------");
+  console.log(
+    "----------------------------------------------------------------------------------------------------"
+  );
   console.log("*extended hello*  --add your name after  the command *hello*");
   console.log("*hello*  -- a simple command to greet the user ");
   console.log("*list*    -- lists all of the available tasks");
+  console.log("*clear*   -- cleans the console ")
+  console.log("*edit*    -- edits an already existing task ");
   console.log("*add*  -- adds a new task to the list of tasks,name the task after the command to add it on the list");
   console.log("*remove*   -- adds a new task to the list of tasks,use the number of the task to remove it");
   console.log("*quit*/*exit*   -- quits the application ");
- 
 }
 
 /**
@@ -103,9 +116,11 @@ function help() {
  */
 function list() {
   for (let i = 1; i < listedTasks.length; i++) {
-    console.log(i + "-" + listedTasks[i]);
+    console.log(i +"-"+ listedTasks[i]);
   }
+  
 }
+
 /**
  * adds new tasks to the list
  * @param x is used to take the input and filter out the task, and save it inside the array
@@ -123,22 +138,28 @@ function addTask(x) {
 
 /**
  * Removes tasks from the list
- * @param x is used to take the input and filter out the index of the array the user wants to remove 
+ * @param x is used to take the input and filter out the index of the array the user wants to remove
  */
- function removeTask(x) {
-  let filterNumber = x.substr(7,1);
-  let i=+filterNumber;
-  if (x.includes("remove ")){
-    listedTasks.splice(i,1)
-    console.log(`removed task number ${i}!!!`)
+function removeTask(x) {
+  let highestIndex=listedTasks.length;
+  let filterNumber = x.substr(7, 1);
+  let i = +filterNumber;
+  if (x.includes("remove ")&&i<=highestIndex) {
+    listedTasks.splice(i, 1);
+    console.log(`removed task number ${i}!!!`);
     console.log(list());
-  }else if (x === "remove\n"){
-    listedTasks.pop();
-    console.log("automatically removed latest task!!!");
-    console.log(list());
+  }else if (x.includes("remove ")&&i>highestIndex){
+console.log(`task number *${i}* cant be removed because it does not exist!`)
   }
+  else if (x === "remove\n") {
+    listedTasks.pop();
+    console.log("automatically removed last task!!!");
+    console.log(list());
   
 }
+}
+// console.log("error, cant remove a task that does not exist on the list !")
+// }else(i<=highestIndex)
 
 /**
  * Exits the application
