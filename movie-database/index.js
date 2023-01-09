@@ -19,7 +19,47 @@ app.get('/test', (req,res)=>{
         res.send( {status:200, message:`${hours}:${minutes}`});
     });
 
+
     
+    app.get('/hello/:id',  (request, response)=> {
+        let id =request.params.id;
+        response.send({status:200, message:`Hello, ${id}`})
+      })
+
+
+
+      app.get('/search/:s', (request, response)=> {
+        let s =request.params.string;
+        if(s){
+            response.send({status:200, message:"Ok",data:`${s}`})
+        }else{
+          response.send ({status:500, error:true, message:"you have to provide a search"}) ;
+        }
+        
+      })
+      const movies = [
+        { title: 'Jaws', year: 1975, rating: 8 },
+        { title: 'Avatar', year: 2009, rating: 7.8 },
+        { title: 'Brazil', year: 1985, rating: 8 },
+        { title: 'الإرهاب والكباب‎', year: 1992, rating: 6.2 }
+    ]
+
+    app.get('/movies/add', (request, response)=> {})
+    app.get('/movies/get', (request, response)=> {
+      
+            let entries =Object.values(movies);
+            response.send({status:200, data:entries[2].title})
+      
+        
+    })
+    app.get('/movies/edit', (request, response)=> {})
+    app.get('/movies/delete', (request, response)=> {})
+
+
+
+
+
+
 
 
 app.listen(port,() =>{
