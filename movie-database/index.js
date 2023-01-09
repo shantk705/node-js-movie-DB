@@ -10,13 +10,17 @@ app.get('/test', (req,res)=>{
     
     res.send({status:200, message:"ok"});
 })
-app.get('/test', (req,res)=>{
+
     
-    res.send(app.get('/time', (req,res)=>{
+    app.get('/time', (req,res)=>{
+    const time=new Date();
+    const hours=time.getHours()
+    const minutes= time.getMinutes();
+        res.send( {status:200, message:`${hours}:${minutes}`});
+    });
+
     
-        res.send( {status:200, message:<TIME/>});
-    }));
-})
+
 
 app.listen(port,() =>{
     console.log(`listening at http://localhost:${port}`)
