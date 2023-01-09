@@ -47,8 +47,9 @@ app.get('/test', (req,res)=>{
     app.get('/movies/add', (request, response)=> {})
     app.get('/movies/get', (request, response)=> {
       
-            let entries =Object.values(movies);
-            response.send({status:200, data:entries[2].title})
+            let movieList =movies.map((item)=>item);
+    
+            response.send({status:200, data:movieList})
       
         
     })
