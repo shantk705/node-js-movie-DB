@@ -17,12 +17,12 @@ function startApp(name) {
 }
 let listedTasks = [
   "",
-  "go to the gym !",
-  "take a shower ",
-  "practice javascript",
+  "[]go to the gym !",
+  "[]take a shower ",
+  "[]practice javascript",
 ];
 
-let checkBox = "[]";
+
 
 /**
  * Decides what to do depending on the data that was received
@@ -64,8 +64,8 @@ function onDataReceived(text) {
     editTask(text);
   } else if (text === "list\n") {
     list();
-  } else if (text.startsWith("check")){
-    isDone(test);
+  } else if (text.includes("check")){
+    isDone(text);
 
   }
     else {
@@ -118,22 +118,36 @@ function help() {
   console.log("*quit*/*exit*   -- quits the application ");
 }
 
+
+
+
+
 /**
  * lists the tasks saved inside the array
  */
 function list() {
-  for (let i = 1; i < listedTasks.length; i++) {
-    console.log(i + "-"+checkBox+" " + listedTasks[i]);
+ 
+  for (let i=+1;i<listedTasks.length;i++) {
+    console.log(i + "-" + listedTasks[i]);
   }
 }
-
 
 /**
  * this function is used to mark the tasks that are done using a tick sign.
  */
-function isDone(z){
-  
+function isDone(x){
+  let number = x.substr(6, x.length);
+  let i =+number;
+  if (x.includes("check ")){
+    listedTasks[i].replace("[]","[A]")
+  }else{
+    console.log("error , cant check a task that does not exist!!!")
+  }
+
+
 }
+ 
+
 
 
 
@@ -146,7 +160,7 @@ function addTask(x) {
   let removeCommon = x.replace("add ", "");
   let removeSpace = removeCommon.trim();
   if (x.includes("add ")) {
-    listedTasks.push(removeSpace);
+    listedTasks.push("[]"+removeSpace);
     console.log(list());
   } else if (x === "add\n") {
     console.log("error, cant add a task without description!!!");
@@ -182,15 +196,15 @@ function removeTask(x) {
  */
 function editTask(x) {
  
-  let filterNumber = x.substr(5, 1);
+  let filterNumber = x.substr(5, 2);
   let i = +filterNumber;
 
   if (x === "edit\n") {
     console.log("error cant edit without a new task!!!");
   } else if (x.startsWith("edit ") && x.includes(i)) {
     console.log(`task number *${i}* has been successfully edited!!!`)
-    newTask = " " + x.slice(6, x.length).trim();
-    listedTasks[i] = newTask;
+    newTask = x.slice(7, x.length);
+    listedTasks[i] = "[]"+newTask;
     console.log(list());
   } else if (x.startsWith("edit ")) {
     console.log("automatically edited last task!!!")
