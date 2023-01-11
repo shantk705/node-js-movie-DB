@@ -137,9 +137,10 @@ function list() {
  */
 function isDone(x){
   let number = x.substr(6, x.length);
+ 
   let i =+number;
   if (x.includes("check ")){
-    listedTasks[i].replace("[]","[A]")
+    listedTasks[i]=listedTasks[i].replace("[]","[✓]")
   }else{
     console.log("error , cant check a task that does not exist!!!")
   }
